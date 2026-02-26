@@ -14,15 +14,14 @@ add_library(${PROJECT_NAME} ${SOURCES})
 
 if (UNIX AND NOT APPLE)
 	set(CMAKE_C_FLAGS "-m64 -msse2")
-elseif (UNIX AND APPLE)
-    target_link_libraries(${PROJECT_NAME} PRIVATE "framework")
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE "c")
 target_link_libraries(${PROJECT_NAME} PRIVATE "z")
-target_link_libraries(${PROJECT_NAME} PRIVATE "png")
+target_link_libraries(${PROJECT_NAME} PRIVATE PNG::PNG)
 
 find_package(SDL2 REQUIRED)
+find_package(PNG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE include)
@@ -39,7 +38,7 @@ target_include_directories(Test PRIVATE include)
 target_link_libraries(Test PRIVATE "Tilengine")
 target_link_libraries(Test PRIVATE "c")
 target_link_libraries(Test PRIVATE "z")
-target_link_libraries(Test PRIVATE "png")
+target_link_libraries(Test PRIVATE PNG::PNG)
 target_link_libraries(Test PRIVATE "m")
 
 # samples

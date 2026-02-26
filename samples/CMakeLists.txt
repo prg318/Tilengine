@@ -5,15 +5,14 @@ project(samples)
 
 if (UNIX AND NOT APPLE)
 	set(CMAKE_C_FLAGS "-m64 -msse2")
-elseif (UNIX AND APPLE)
-    link_libraries("framework")
 endif()
 
 include_directories(../include)
 link_libraries("Tilengine")
 link_libraries("c")
 link_libraries("z")
-link_libraries("png")
+find_package(PNG REQUIRED)
+link_libraries(PNG::PNG)
 link_libraries("m")
 find_package(SDL2 REQUIRED)
 link_libraries(${SDL2_LIBRARIES})
@@ -23,7 +22,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-result -Wno-format-truncation")
 
 file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(barrel 
+add_executable(barrel
      Barrel.c
      Simon.c)
 
@@ -78,6 +77,3 @@ add_executable(forest
 
 add_executable(querylayer
      QueryLayer.c)
-
-
-
